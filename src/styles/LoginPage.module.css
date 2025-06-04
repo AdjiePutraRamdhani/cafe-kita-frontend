@@ -1,0 +1,134 @@
+/* src/styles/LoginPage.module.css */
+
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Latar belakang gradien yang lebih modern dan hidup */
+    background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%); /* Gradien hijau segar */
+    /* Atau bisa juga pakai gambar latar belakang dengan overlay */
+    /* background: url('https://source.unsplash.com/random/1920x1080/?coffee,cafe') no-repeat center center fixed; */
+    /* background-size: cover; */
+    /* position: relative; */
+    font-family: 'Poppins', sans-serif; /* Font yang lebih stylish */
+    overflow: hidden; /* Pastikan tidak ada scrollbar yang tidak diinginkan */
+}
+
+/* Jika menggunakan gambar, tambahkan overlay ini */
+/* .loginContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); 
+    z-index: 1;
+} */
+
+.loginBox {
+    background-color: #ffffff;
+    padding: 45px 40px; /* Padding sedikit lebih besar */
+    border-radius: 18px; /* Lebih membulat */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25); /* Bayangan lebih dramatis */
+    width: 100%;
+    max-width: 420px; /* Lebih lebar sedikit */
+    text-align: center;
+    position: relative; /* Penting untuk z-index jika ada overlay */
+    z-index: 2; /* Pastikan di atas overlay gambar */
+    animation: fadeInScale 0.6s ease-out forwards; /* Animasi saat muncul */
+}
+
+/* Animasi untuk loginBox */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.title {
+    margin-bottom: 20px; /* Jarak dengan tagline */
+    color: #2c3e50;
+    font-size: 2.5em; /* Ukuran font lebih besar */
+    font-weight: 800; /* Sangat tebal */
+    letter-spacing: -1px; /* Sedikit rapat */
+}
+
+.tagline {
+    color: #667085; /* Warna abu-abu yang lebih lembut */
+    margin-top: 0; /* Menempel ke judul */
+    margin-bottom: 35px; /* Jarak dengan form */
+    font-size: 1.15em; /* Ukuran lebih besar */
+    font-weight: 400;
+}
+
+.formGroup {
+    margin-bottom: 25px; /* Jarak antar grup form */
+    text-align: left;
+}
+
+.label {
+    display: block;
+    margin-bottom: 10px; /* Jarak label dengan input */
+    font-weight: 600;
+    color: #495057; /* Warna label yang jelas */
+    font-size: 0.98em;
+}
+
+.input {
+    width: 100%;
+    padding: 14px 18px; /* Padding lebih besar */
+    border: 2px solid #e0e0e0; /* Border abu-abu terang yang solid */
+    border-radius: 10px; /* Radius lebih membulat */
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #4CAF50; /* Border hijau saat fokus */
+    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2); /* Bayangan fokus hijau */
+}
+
+.error {
+    color: #e74c3c;
+    margin-top: 10px; /* Jarak lebih kecil */
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: center;
+    padding: 5px;
+    background-color: #ffe0e0;
+    border-radius: 5px;
+}
+
+.button {
+    width: 100%;
+    padding: 16px; /* Padding lebih besar */
+    background-color: #4CAF50; /* Warna hijau yang kuat */
+    color: white;
+    border: none;
+    border-radius: 10px; /* Lebih membulat */
+    cursor: pointer;
+    font-size: 1.2em; /* Ukuran font lebih besar */
+    font-weight: bold;
+    margin-top: 30px; /* Jarak dari form */
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.button:hover {
+    background-color: #45a049;
+    transform: translateY(-3px); /* Efek hover lebih jelas */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
