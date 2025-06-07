@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { getAllMenuItems, createOrder } from '../services/orderService';
 import styles from '../styles/OrderPage.module.css';
 
-const getDisplayImageUrl = (category) => {
+/*const getDisplayImageUrl = (category) => {
     switch (category) {
         case 'Makanan':
-            return 'https://via.placeholder.com/80x80/FFC107/FFFFFF?text=FOOD';
+            return 'https://images.pexels.com/photos/3926133/pexels-photo-3926133.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
         case 'Minuman':
             return 'https://via.placeholder.com/80x80/007BFF/FFFFFF?text=DRINK';
         case 'Snack':
@@ -14,7 +14,7 @@ const getDisplayImageUrl = (category) => {
         default:
             return 'https://via.placeholder.com/80x80/6c757d/FFFFFF?text=ITEM';
     }
-};
+};*/
 
 function OrderPage() {
     const navigate = useNavigate();
@@ -98,7 +98,6 @@ function OrderPage() {
     });
     const categories = ['Semua', ...new Set(apiMenuData.map(item => item.kategori || 'Lainnya').filter(Boolean))];
     const tableNumbers = Array.from({ length: 10 }, (_, i) => `Meja ${i + 1}`);
-    tableNumbers.push('Take Away');
     // Akhir dari fungsi yang tidak berubah signifikan
 
 
@@ -192,7 +191,11 @@ function OrderPage() {
                     {filteredMenu.length > 0 ? (
                         filteredMenu.map(item => (
                             <div key={item.id} className={styles.menuItem} onClick={() => !isSubmittingOrder && handleAddToOrder(item)} style={{ cursor: isSubmittingOrder ? 'not-allowed' : 'pointer' }}>
-                                <img src={getDisplayImageUrl(item.kategori)} alt={item.nama} />
+                                <img
+                                    src={item.imageUrl || 'https://via.placeholder.com/80x80?text=NO+IMAGE'}
+                                    alt={item.nama}
+                                    className={styles.menuItemImage} // jika ingin styling khusus
+                                />
                                 <div className={styles.menuItemInfo}>
                                     <h4>{item.nama || 'Nama Tidak Tersedia'}</h4>
                                     <p>Rp{(parseFloat(item.harga) || 0).toLocaleString()}</p>

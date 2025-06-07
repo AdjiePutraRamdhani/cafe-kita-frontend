@@ -100,58 +100,69 @@ function ActiveOrdersPage() {
         <p className={styles.noOrdersMessage}>Belum ada pesanan.</p>
       ) : (
         <div className={styles.ordersGrid}>
-          {allOrders.map(order => {
-            const isCurrentlyUpdating = updatingStatusForOrderId === order.id;
-            return (
-              <div key={order.id} className={`${styles.orderCard} ${getStatusClass(order.status)}`}>
-                <div className={styles.cardHeader}>
-                  <span className={styles.orderId}>#ORDER{String(order.id).padStart(3, '0')}</span>
-                  <span className={styles.tableInfo}>{typeof order.tableNumber === 'number' ? `Meja ${order.tableNumber}` : order.tableNumber}</span>
-                </div>
-                <div className={styles.customerInfo}>
-                  Customer: {order.customerName}
-                </div>
-                <ul className={styles.orderItems}>
-                  {order.items && order.items.map((item, index) => (
-                    <li key={`${order.id}-item-${item.menuId}-${index}`} className={styles.item}>
-                      <span>{item.menu ? item.menu.nama : 'Nama Menu Tidak Ada'}</span>
-                      <span>{item.quantity}x</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className={styles.cardFooter}>
-                  <div className={styles.totalPrice}>Total: Rp{parseFloat(order.totalPrice).toLocaleString('id-ID')}</div>
-                  <div className={`${styles.statusLabel}`}>
-                    Status: {order.status}
-                  </div>
-                  <div className={styles.orderDate}>
-                      Dibuat: {new Date(order.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })} {new Date(order.createdAt).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}
-                  </div>
-                  <div className={styles.actions}>
-                    {/* Tombol Proses (PENDING -> DIPROSES) */}
-                    {order.status === 'PENDING' && (
-                      <button 
-                        onClick={() => handleUpdateStatus(order.id, 'COMPLETED', 'Selesai')} 
-                        className={`${styles.actionButton} ${styles.prosesButton}`}
-                        disabled={isCurrentlyUpdating}
-                      >
-                        {isCurrentlyUpdating ? 'Memproses...' : 'Proses'}
-                      </button>
-                    )}
-                     {(order.status === 'PENDING' || order.status === 'DIPROSES') && (
-                      <button 
-                        onClick={() => handleUpdateStatus(order.id, 'CANCELLED', 'Batalkan')} 
-                        className={`${styles.actionButton} ${styles.batalButton}`}
-                        disabled={isCurrentlyUpdating}
-                      >
-                        {isCurrentlyUpdating ? 'Membatalkan...' : 'Batalkan'}
-                      </button>
-                    )}
-                  </div>
-                </div>
+        {allOrders.map(order => {
+        const isUpdating = updatingStatusForOrderId === order.id;
+        return (
+          <div key={order.id} className={styles.orderCard}>
+            {/* Header: Order ID dan Meja */}
+            <div className={styles.orderCardHeader}>
+              <span className={styles.orderId}>#ORDER{String(order.id).padStart(3, '0')}</span>
+              <span className={styles.tableNumber}>
+                {typeof order.tableNumber === 'number' ? `Meja ${order.tableNumber}` : order.tableNumber}
+              </span>
+            </div>
+
+            {/* Customer Name */}
+            <div className={styles.customerInfo}>
+              {order.customerName && `Customer: ${order.customerName}`}
+            </div>
+
+            {/* Daftar Menu */}
+            <ul className={styles.orderItems}>
+              {order.items?.map((item, index) => (
+                <li key={index} className={styles.orderItem}>
+                  <span>{item.menu?.nama || 'Menu tidak ditemukan'}</span>
+                  <span>{item.quantity}x</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Total Harga */}
+            <div className={styles.orderTotal}>
+              Total: Rp{parseFloat(order.totalPrice).toLocaleString('id-ID')}
+            </div>
+
+            {/* Status */}
+            <div className={`${styles.orderStatus} ${getStatusClass(order.status)}`}>
+              Status: {order.status === 'PENDING'
+                ? 'Menunggu'
+                : order.status === 'COMPLETED'
+                ? 'Selesai'
+                : 'Dibatalkan'}
+            </div>
+
+            {/* Tombol Aksi: Hanya Selesai dan Batalkan */}
+            {order.status === 'PENDING' && (
+              <div className={styles.orderActions}>
+                <button
+                  className={`${styles.actionButton} ${styles.completeButton}`}
+                  onClick={() => handleUpdateStatus(order.id, 'COMPLETED', 'Selesai')}
+                  disabled={isUpdating}
+                >
+                  {isUpdating ? 'Menyelesaikan...' : 'Selesai'}
+                </button>
+                <button
+                  className={`${styles.actionButton} ${styles.cancelButton}`}
+                  onClick={() => handleUpdateStatus(order.id, 'CANCELLED', 'Batalkan')}
+                  disabled={isUpdating}
+                >
+                  {isUpdating ? 'Membatalkan...' : 'Batalkan'}
+                </button>
               </div>
-            );
-          })}
+            )}
+          </div>
+        );
+      })}
         </div>
       )}
     </div>

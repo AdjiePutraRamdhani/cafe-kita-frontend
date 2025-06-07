@@ -191,19 +191,20 @@ function DashboardPage() {
                 </div>
 
                 {/* Bagian Pesanan Aktif (Status PENDING) - Menggunakan state dari API */}
-                <h2 className={styles.sectionTitle}>Pesanan Aktif (Status: PENDING)</h2>
-                <div className={styles.activeOrdersListContainer}> {/* Tambahkan container jika perlu styling scroll */}
+                <h2 className={styles.sectionTitle}>Pesanan Aktif</h2>
+                <div className={styles.activeOrdersList}>
+                    {/* Ini akan diisi dengan data pesanan aktif dari API nantinya */}
                     {daftarPesananAktif.length === 0 ? (
                         <p>Tidak ada pesanan aktif (PENDING) saat ini.</p>
                     ) : (
                         <ul className={styles.orderList}> {/* Anda mungkin perlu class .orderList atau .activeOrdersList dari CSS Anda */}
                             {daftarPesananAktif.map(order => (
                                 <li key={order.id} className={styles.orderListItem}> {/* Anda mungkin perlu class .orderListItem */}
-                                    <div><strong>Pesanan #{order.id}</strong> - Meja: {order.tableNumber}</div>
+                                    <div><strong>Pesanan #{order.id}</strong></div>
                                     <div>Customer: {order.customerName}</div>
+                                    <div>Meja: {order.tableNumber}</div>
                                     <div>Items: {formatOrderItemsSummary(order.items)}</div>
                                     <div>Total: Rp{parseFloat(order.totalPrice).toLocaleString('id-ID')}</div>
-                                    <div>Dibuat: {new Date(order.createdAt).toLocaleTimeString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
                                     <div 
                                         className={`${styles.statusBadge} ${styles['status' + order.status.toUpperCase()]}`}
                                     >
@@ -214,12 +215,12 @@ function DashboardPage() {
                             ))}
                         </ul>
                     )}
+                    <p style={{textAlign: 'center', marginTop: '20px'}}>
+                        <button onClick={() => navigate('/active-orders')} className={styles.logoutButton} style={{backgroundColor: '#17a2b8'}}>
+                            Lihat Semua Pesanan Aktif
+                        </button>
+                    </p>
                 </div>
-                 <p style={{textAlign: 'center', marginTop: '20px'}}>
-                    <button onClick={() => navigate('/active-orders')} className={styles.logoutButton} style={{backgroundColor: '#17a2b8'}}>
-                        Lihat Semua Pesanan Aktif
-                    </button>
-                </p>
             </main>
         </div>
     );
