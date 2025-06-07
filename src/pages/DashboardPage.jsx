@@ -168,7 +168,7 @@ function DashboardPage() {
 
             {/* Konten Utama Dashboard */}
             <main className={styles.mainContent}>
-                <h1 className={styles.welcomeHeader}>Selamat Datang, Pelayan!</h1>
+                <h1 className={styles.welcomeHeader}>Selamat Datang</h1>
                 <p>Ringkasan Aktivitas Cafe-Kita hari ini.</p>
 
                 {/* Grid Kartu Informasi - Menggunakan state dari API */}
