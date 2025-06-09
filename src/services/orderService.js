@@ -117,9 +117,14 @@ export const getOrders = async (params = {}) => {
     }
   } catch (error) {
     console.error('Get Orders API error:', error.response ? error.response.data : error.message);
-    if (error.response && error.response.data && error.response.data.message) {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+      return; // Stop eksekusi lebih lanjut
+    } else if (error.response && error.response.data && error.response.data.message) {
       throw new Error(error.response.data.message);
-    } else if (error.response) {
+    }
+      else if (error.response) {
       throw new Error(`Gagal mengambil data pesanan. Server merespons dengan status ${error.response.status}.`);
     } else if (error.request) {
       throw new Error('Tidak ada respons dari server saat mengambil pesanan. Cek koneksi.');
